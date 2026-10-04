@@ -1,0 +1,254 @@
+{
+  "name": "AURA · 02 Intake Gmail → Webhook principal",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyX",
+              "value": 5,
+              "unit": "minutes"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {
+          "q": "label:leads-ia is:unread -from:me newer_than:2d"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b64cac0f-375c-589c-8d7b-5ee19bec07d2",
+      "name": "01 Trigger Gmail Leads (desde ahora)",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REEMPLAZAR",
+          "name": "Gmail (AURA)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "68ac0ba4-3f68-561a-bb1c-16a1a3988ec2",
+              "name": "webhook_url_leads",
+              "value": "https://REEMPLAZAR.app.n8n.cloud/webhook/aura-lead-entrante",
+              "type": "string"
+            },
+            {
+              "id": "59681d1a-fdc8-5739-99aa-5a2ac7186976",
+              "name": "slack_canal_alertas_id",
+              "value": "CREEMPLAZAR_ALR",
+              "type": "string"
+            },
+            {
+              "id": "f6c8cae7-e6ef-5b9d-ac3b-b53c8ff78ab9",
+              "name": "max_chars_mensaje",
+              "value": 6000,
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        270,
+        0
+      ],
+      "id": "f10399f5-7fac-5240-b26e-a64b97114006",
+      "name": "02 Config Intake"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "\nconst cfg = $('02 Config Intake').first().json;\nconst f = $json.from?.value?.[0] ?? {};\nconst cuerpo = `${$json.subject ?? ''}\\n${$json.text ?? ''}`.trim().slice(0, Number(cfg.max_chars_mensaje));\nreturn { json: { fuente: 'Gmail', nombre: f.name ?? '', email: f.address ?? '', mensaje: cuerpo,\n  gmail_message_id: $json.id, gmail_thread_id: $json.threadId } };\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        540,
+        0
+      ],
+      "id": "fc2906f9-acf4-52bd-96a6-bc020a762251",
+      "name": "03 Preparar Payload Lead"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('02 Config Intake').first().json.webhook_url_leads }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        810,
+        0
+      ],
+      "id": "826ed38e-0432-53cf-91a7-ba7ea0dec0d0",
+      "name": "04 Reenviar a Webhook Principal",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REEMPLAZAR",
+          "name": "AURA Webhook Token (Header Auth)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "markAsRead",
+        "messageId": "={{ $('03 Preparar Payload Lead').item.json.gmail_message_id }}"
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1080,
+        0
+      ],
+      "id": "ab51593c-3cae-5a86-ba02-1647854ffde2",
+      "name": "05 Marcar Correo Leido",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REEMPLAZAR",
+          "name": "Gmail (AURA)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "={{ $('02 Config Intake').first().json.slack_canal_alertas_id }}",
+          "mode": "id"
+        },
+        "text": "={{ '🚨 AURA Intake: no se pudo reenviar el correo ' + $('03 Preparar Payload Lead').item.json.gmail_message_id + ' al webhook principal.' }}",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        1080,
+        170
+      ],
+      "id": "0cc68dd5-8665-5140-ba41-4de46842a0f8",
+      "name": "06 Alerta Slack Fallo Intake",
+      "credentials": {
+        "slackApi": {
+          "id": "REEMPLAZAR",
+          "name": "Slack (AURA)"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "## Intake Gmail (disparador inteligente)\nSolo correos con etiqueta `leads-ia`, no leídos, que no vengan de mí (anti-bucle). Arranca 'desde ahora' y sondea cada 5 min. Cada correo se reenvía como UNA ejecución del flujo principal (necesario para que el HITL funcione por lead).",
+        "height": 170,
+        "width": 520,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -260
+      ],
+      "id": "34078c7f-a12a-5883-a279-a55be92e4bf8",
+      "name": "Nota"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "01 Trigger Gmail Leads (desde ahora)": {
+      "main": [
+        [
+          {
+            "node": "02 Config Intake",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "02 Config Intake": {
+      "main": [
+        [
+          {
+            "node": "03 Preparar Payload Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "03 Preparar Payload Lead": {
+      "main": [
+        [
+          {
+            "node": "04 Reenviar a Webhook Principal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "04 Reenviar a Webhook Principal": {
+      "main": [
+        [
+          {
+            "node": "05 Marcar Correo Leido",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "06 Alerta Slack Fallo Intake",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": true,
+    "saveExecutionProgress": true
+  },
+  "versionId": "669d4ff8-29f5-5129-9b00-d4d61323b67c",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

@@ -1,0 +1,8 @@
+Nombre,Categoria,Descripcion,Precio desde USD,Precio hasta USD,Duracion estimada,Activo
+Desarrollo Web Corporativo,Web,"Sitio institucional con CMS, SEO tecnico base y analitica",3500,9000,4-8 semanas,checked
+E-commerce,Web,"Tienda online con pasarela de pago, catalogo e integraciones",6000,18000,8-14 semanas,checked
+Automatizacion de Procesos con IA,IA,"Flujos con n8n/Make, agentes y RAG sobre datos del cliente",2500,12000,3-10 semanas,checked
+SEO y Contenidos,Marketing,"Estrategia, produccion y optimizacion de contenidos",800,3000,mensual,checked
+Campanas de Performance (Ads),Marketing,Gestion de Google/Meta Ads con reporteria,600,4000,mensual,checked
+Branding e Identidad,Diseno,"Identidad visual, manual de marca y piezas base",1500,6000,3-6 semanas,checked
+Dashboards y Consultoria de Datos,Datos,"Modelado, KPIs y tableros ejecutivos",2000,8000,3-8 semanas,checked

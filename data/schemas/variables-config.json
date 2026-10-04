@@ -1,0 +1,356 @@
+{
+  "empresa_nombre": {
+    "valor": "Aurora Digital Studio",
+    "tipo": "string",
+    "grupo": "Negocio",
+    "descripcion": "Nombre del cliente ficticio; entra a los prompts y a la firma."
+  },
+  "empresa_firma": {
+    "valor": "Equipo Comercial · Aurora Digital Studio",
+    "tipo": "string",
+    "grupo": "Negocio",
+    "descripcion": "Firma que Claude/GPT agrega al final del correo."
+  },
+  "tono_marca": {
+    "valor": "profesional, cercano y claro",
+    "tipo": "string",
+    "grupo": "Negocio",
+    "descripcion": "Tono de voz inyectado en el prompt de propuesta."
+  },
+  "idioma_por_defecto": {
+    "valor": "es",
+    "tipo": "string",
+    "grupo": "Negocio",
+    "descripcion": "Idioma si la IA no detecta el del cliente."
+  },
+  "n8n_base_url": {
+    "valor": "https://REEMPLAZAR.app.n8n.cloud",
+    "tipo": "string",
+    "grupo": "Infraestructura",
+    "descripcion": "URL base de tu instancia; arma el enlace a la ejecución en alertas."
+  },
+  "airtable_base_id": {
+    "valor": "appREEMPLAZAR",
+    "tipo": "string",
+    "grupo": "Infraestructura",
+    "descripcion": "ID de la base Airtable (empieza por app)."
+  },
+  "tbl_leads": {
+    "valor": "tblREEMPLAZAR_LEADS",
+    "tipo": "string",
+    "grupo": "Infraestructura",
+    "descripcion": "ID de la tabla Leads."
+  },
+  "tbl_propuestas": {
+    "valor": "tblREEMPLAZAR_PROPUESTAS",
+    "tipo": "string",
+    "grupo": "Infraestructura",
+    "descripcion": "ID de la tabla Propuestas."
+  },
+  "tbl_interacciones": {
+    "valor": "tblREEMPLAZAR_INTERACCIONES",
+    "tipo": "string",
+    "grupo": "Infraestructura",
+    "descripcion": "ID de la tabla Interacciones."
+  },
+  "tbl_catalogo": {
+    "valor": "tblREEMPLAZAR_CATALOGO",
+    "tipo": "string",
+    "grupo": "Infraestructura",
+    "descripcion": "ID de la tabla Catalogo_Servicios."
+  },
+  "tbl_errores": {
+    "valor": "tblREEMPLAZAR_ERRORES",
+    "tipo": "string",
+    "grupo": "Infraestructura",
+    "descripcion": "ID de la tabla Errores_Log."
+  },
+  "tbl_lotes": {
+    "valor": "tblREEMPLAZAR_LOTES",
+    "tipo": "string",
+    "grupo": "Infraestructura",
+    "descripcion": "ID de la tabla Lotes_Batch."
+  },
+  "slack_canal_operaciones_id": {
+    "valor": "CREEMPLAZAR_OPS",
+    "tipo": "string",
+    "grupo": "Infraestructura",
+    "descripcion": "Canal Slack con un hilo por lead (ID, empieza por C)."
+  },
+  "slack_canal_aprobaciones_id": {
+    "valor": "CREEMPLAZAR_APR",
+    "tipo": "string",
+    "grupo": "Infraestructura",
+    "descripcion": "Canal Slack donde el humano aprueba o rechaza."
+  },
+  "slack_canal_alertas_id": {
+    "valor": "CREEMPLAZAR_ALR",
+    "tipo": "string",
+    "grupo": "Infraestructura",
+    "descripcion": "Canal Slack para alertas de error."
+  },
+  "modelo_openai_economico": {
+    "valor": "gpt-4o-mini",
+    "tipo": "string",
+    "grupo": "IA",
+    "descripcion": "Modelo barato: clasificación/extracción y propuestas Estándar."
+  },
+  "modelo_claude_premium": {
+    "valor": "claude-sonnet-5-5",
+    "tipo": "string",
+    "grupo": "IA",
+    "descripcion": "Modelo para lectura densa y propuestas VIP."
+  },
+  "modelo_claude_batch": {
+    "valor": "claude-sonnet-5-5",
+    "tipo": "string",
+    "grupo": "IA",
+    "descripcion": "Modelo del lote nocturno (Message Batches, -50%)."
+  },
+  "max_tokens_clasificacion": {
+    "valor": 400,
+    "tipo": "number",
+    "grupo": "IA",
+    "descripcion": "Tope de salida IA-1 (control de costo)."
+  },
+  "max_tokens_propuesta_std": {
+    "valor": 900,
+    "tipo": "number",
+    "grupo": "IA",
+    "descripcion": "Tope de salida propuesta Estándar."
+  },
+  "max_tokens_propuesta_vip": {
+    "valor": 1500,
+    "tipo": "number",
+    "grupo": "IA",
+    "descripcion": "Tope de salida propuesta VIP."
+  },
+  "max_tokens_seguimiento": {
+    "valor": 500,
+    "tipo": "number",
+    "grupo": "IA",
+    "descripcion": "Tope de salida por correo de seguimiento (lote)."
+  },
+  "max_palabras_std": {
+    "valor": 220,
+    "tipo": "number",
+    "grupo": "IA",
+    "descripcion": "Longitud máxima del cuerpo (Estándar)."
+  },
+  "max_palabras_vip": {
+    "valor": 380,
+    "tipo": "number",
+    "grupo": "IA",
+    "descripcion": "Longitud máxima del cuerpo (VIP)."
+  },
+  "umbral_confianza_min": {
+    "valor": 0.6,
+    "tipo": "number",
+    "grupo": "IA",
+    "descripcion": "Debajo de este valor se agrega alerta de 'confianza baja'."
+  },
+  "precio_openai_eco_in": {
+    "valor": 0.15,
+    "tipo": "number",
+    "grupo": "IA",
+    "descripcion": "USD por millón de tokens de entrada (GPT-4o-mini)."
+  },
+  "precio_openai_eco_out": {
+    "valor": 0.6,
+    "tipo": "number",
+    "grupo": "IA",
+    "descripcion": "USD por millón de tokens de salida (GPT-4o-mini)."
+  },
+  "precio_claude_premium_in": {
+    "valor": 2,
+    "tipo": "number",
+    "grupo": "IA",
+    "descripcion": "USD por millón de tokens de entrada (Claude Sonnet 5.5)."
+  },
+  "precio_claude_premium_out": {
+    "valor": 10,
+    "tipo": "number",
+    "grupo": "IA",
+    "descripcion": "USD por millón de tokens de salida (Claude Sonnet 5.5)."
+  },
+  "descuento_batch": {
+    "valor": 0.5,
+    "tipo": "number",
+    "grupo": "IA",
+    "descripcion": "Fracción de descuento de la API de lotes (50%)."
+  },
+  "umbral_vip": {
+    "valor": 75,
+    "tipo": "number",
+    "grupo": "Reglas",
+    "descripcion": "Score >= umbral => ruta VIP."
+  },
+  "umbral_spam": {
+    "valor": 20,
+    "tipo": "number",
+    "grupo": "Reglas",
+    "descripcion": "Score <= umbral => descartar como spam."
+  },
+  "min_chars_mensaje": {
+    "valor": 25,
+    "tipo": "number",
+    "grupo": "Reglas",
+    "descripcion": "Mínimo de caracteres para considerar el mensaje válido."
+  },
+  "max_chars_mensaje": {
+    "valor": 6000,
+    "tipo": "number",
+    "grupo": "Reglas",
+    "descripcion": "Máximo de caracteres que se procesan (control de costo)."
+  },
+  "horas_espera_aprobacion": {
+    "valor": 24,
+    "tipo": "number",
+    "grupo": "Reglas",
+    "descripcion": "Tiempo máximo de espera del humano antes de expirar."
+  },
+  "dias_sin_respuesta": {
+    "valor": 3,
+    "tipo": "number",
+    "grupo": "Reglas",
+    "descripcion": "Días sin respuesta para generar seguimiento (lote)."
+  },
+  "batch_max_leads": {
+    "valor": 50,
+    "tipo": "number",
+    "grupo": "Reglas",
+    "descripcion": "Máximo de leads por lote nocturno."
+  },
+  "catalogo_max_items": {
+    "valor": 40,
+    "tipo": "number",
+    "grupo": "Reglas",
+    "descripcion": "Máximo de servicios que se cargan como contexto."
+  },
+  "canal_whatsapp_activo": {
+    "valor": false,
+    "tipo": "boolean",
+    "grupo": "Canales",
+    "descripcion": "true solo si tienes WhatsApp Cloud API y plantilla aprobada."
+  },
+  "whatsapp_phone_number_id": {
+    "valor": "REEMPLAZAR_PHONE_NUMBER_ID",
+    "tipo": "string",
+    "grupo": "Canales",
+    "descripcion": "ID del número emisor en Meta."
+  },
+  "whatsapp_plantilla": {
+    "valor": "aura_propuesta_enviada|es",
+    "tipo": "string",
+    "grupo": "Canales",
+    "descripcion": "Plantilla aprobada (nombre|idioma)."
+  },
+  "estado_pendiente": {
+    "valor": "Pendiente",
+    "tipo": "string",
+    "grupo": "Estados",
+    "descripcion": "Lead recién creado."
+  },
+  "estado_procesado_ia": {
+    "valor": "Procesado por IA",
+    "tipo": "string",
+    "grupo": "Estados",
+    "descripcion": "IA-1 clasificó el lead."
+  },
+  "estado_esperando": {
+    "valor": "Esperando aprobacion",
+    "tipo": "string",
+    "grupo": "Estados",
+    "descripcion": "Borrador listo; espera decisión humana."
+  },
+  "estado_aprobado": {
+    "valor": "Aprobado por Humano",
+    "tipo": "string",
+    "grupo": "Estados",
+    "descripcion": "Humano aprobó la propuesta."
+  },
+  "estado_enviado": {
+    "valor": "Enviado",
+    "tipo": "string",
+    "grupo": "Estados",
+    "descripcion": "Correo enviado al cliente."
+  },
+  "estado_rechazado": {
+    "valor": "Rechazado por Humano",
+    "tipo": "string",
+    "grupo": "Estados",
+    "descripcion": "Rechazado o sin respuesta en el plazo."
+  },
+  "estado_spam": {
+    "valor": "Descartado (spam)",
+    "tipo": "string",
+    "grupo": "Estados",
+    "descripcion": "Descartado automáticamente."
+  },
+  "estado_revision": {
+    "valor": "Revision manual",
+    "tipo": "string",
+    "grupo": "Estados",
+    "descripcion": "Requiere revisión humana (sin categoría o dato dudoso)."
+  },
+  "estado_error": {
+    "valor": "Error",
+    "tipo": "string",
+    "grupo": "Estados",
+    "descripcion": "Falló una API crítica."
+  },
+  "prop_borrador": {
+    "valor": "Borrador IA",
+    "tipo": "string",
+    "grupo": "Estados",
+    "descripcion": "Estado de la propuesta recién generada."
+  },
+  "prop_aprobada": {
+    "valor": "Aprobada por Humano",
+    "tipo": "string",
+    "grupo": "Estados",
+    "descripcion": "Propuesta aprobada."
+  },
+  "prop_rechazada": {
+    "valor": "Rechazada por Humano",
+    "tipo": "string",
+    "grupo": "Estados",
+    "descripcion": "Propuesta rechazada o expirada."
+  },
+  "prop_enviada": {
+    "valor": "Enviada",
+    "tipo": "string",
+    "grupo": "Estados",
+    "descripcion": "Propuesta enviada."
+  },
+  "tipo_propuesta_inicial": {
+    "valor": "Propuesta inicial",
+    "tipo": "string",
+    "grupo": "Estados",
+    "descripcion": "Tipo de propuesta (flujo principal)."
+  },
+  "tipo_propuesta_seguimiento": {
+    "valor": "Seguimiento",
+    "tipo": "string",
+    "grupo": "Estados",
+    "descripcion": "Tipo de propuesta (lote nocturno)."
+  },
+  "lote_en_proceso": {
+    "valor": "en_proceso",
+    "tipo": "string",
+    "grupo": "Estados",
+    "descripcion": "Estado del lote mientras Anthropic procesa."
+  },
+  "lote_completado": {
+    "valor": "completado",
+    "tipo": "string",
+    "grupo": "Estados",
+    "descripcion": "Lote terminado sin fallos."
+  },
+  "lote_con_errores": {
+    "valor": "con_errores",
+    "tipo": "string",
+    "grupo": "Estados",
+    "descripcion": "Lote terminado con solicitudes fallidas."
+  }
+}

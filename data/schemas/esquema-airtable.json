@@ -1,0 +1,440 @@
+{
+  "Leads": [
+    {
+      "campo": "Etiqueta (primario)",
+      "tipo": "Fórmula",
+      "opciones_o_formula": "{Nombre} & \" · \" & {Email}",
+      "uso": "Identificador legible"
+    },
+    {
+      "campo": "Nombre",
+      "tipo": "Texto",
+      "opciones_o_formula": "",
+      "uso": "Extraído por IA-1 o declarado"
+    },
+    {
+      "campo": "Email",
+      "tipo": "Email",
+      "opciones_o_formula": "",
+      "uso": "Clave de contacto; nunca se envía a la IA"
+    },
+    {
+      "campo": "Telefono",
+      "tipo": "Teléfono",
+      "opciones_o_formula": "",
+      "uso": "Formato E.164 (+57…); nunca se envía a la IA"
+    },
+    {
+      "campo": "Empresa",
+      "tipo": "Texto",
+      "opciones_o_formula": "",
+      "uso": "Extraída por IA-1"
+    },
+    {
+      "campo": "Fuente",
+      "tipo": "Selección única",
+      "opciones_o_formula": "Webhook, Gmail, Formulario",
+      "uso": "Origen del lead"
+    },
+    {
+      "campo": "Mensaje original",
+      "tipo": "Texto largo",
+      "opciones_o_formula": "",
+      "uso": "Mensaje recibido (máx. 6000 caracteres)"
+    },
+    {
+      "campo": "Hash idempotencia",
+      "tipo": "Texto",
+      "opciones_o_formula": "",
+      "uso": "Hash email+mensaje: evita duplicados y bucles"
+    },
+    {
+      "campo": "Estado",
+      "tipo": "Selección única",
+      "opciones_o_formula": "Pendiente, Procesado por IA, Esperando aprobacion, Aprobado por Humano, Enviado, Rechazado por Humano, Descartado (spam), Revision manual, Error",
+      "uso": "Máquina de estados"
+    },
+    {
+      "campo": "Categoria IA",
+      "tipo": "Selección única",
+      "opciones_o_formula": "VIP, ESTANDAR, SPAM",
+      "uso": "Regla determinista por score"
+    },
+    {
+      "campo": "Score IA",
+      "tipo": "Número (0-100)",
+      "opciones_o_formula": "",
+      "uso": "Puntaje devuelto por IA-1"
+    },
+    {
+      "campo": "Urgencia",
+      "tipo": "Selección única",
+      "opciones_o_formula": "alta, media, baja",
+      "uso": "Extraída por IA-1"
+    },
+    {
+      "campo": "Presupuesto estimado USD",
+      "tipo": "Número",
+      "opciones_o_formula": "",
+      "uso": "Si el cliente lo menciona"
+    },
+    {
+      "campo": "Resumen IA",
+      "tipo": "Texto largo",
+      "opciones_o_formula": "",
+      "uso": "Necesidad resumida (≤ 280 car.)"
+    },
+    {
+      "campo": "Servicio sugerido",
+      "tipo": "Texto",
+      "opciones_o_formula": "",
+      "uso": "Servicio del catálogo sugerido"
+    },
+    {
+      "campo": "Datos faltantes",
+      "tipo": "Texto largo",
+      "opciones_o_formula": "",
+      "uso": "Lo que la IA no pudo extraer"
+    },
+    {
+      "campo": "Gmail Message ID / Gmail Thread ID",
+      "tipo": "Texto (×2)",
+      "opciones_o_formula": "",
+      "uso": "Mapeo de hilo Gmail"
+    },
+    {
+      "campo": "Slack Thread TS / Slack Canal ID",
+      "tipo": "Texto (×2)",
+      "opciones_o_formula": "",
+      "uso": "Mapeo de hilo Slack (thread_ts)"
+    },
+    {
+      "campo": "Intentos IA",
+      "tipo": "Número",
+      "opciones_o_formula": "",
+      "uso": "Tope anti-bucle de reintentos"
+    },
+    {
+      "campo": "Recibido en / Enviado en",
+      "tipo": "Fecha y hora (×2)",
+      "opciones_o_formula": "",
+      "uso": "Tiempos del proceso"
+    },
+    {
+      "campo": "Seguimiento generado",
+      "tipo": "Checkbox",
+      "opciones_o_formula": "",
+      "uso": "Lo marca el lote nocturno"
+    },
+    {
+      "campo": "Costo IA-1 USD",
+      "tipo": "Número",
+      "opciones_o_formula": "",
+      "uso": "Costo de la clasificación"
+    },
+    {
+      "campo": "Propuestas / Interacciones / Errores",
+      "tipo": "Vínculo a otra tabla (×3)",
+      "opciones_o_formula": "",
+      "uso": "Relaciones inversas automáticas"
+    },
+    {
+      "campo": "N Errores",
+      "tipo": "Rollup (conteo)",
+      "opciones_o_formula": "Errores",
+      "uso": "Para KPI de error"
+    },
+    {
+      "campo": "Tuvo error",
+      "tipo": "Fórmula",
+      "opciones_o_formula": "IF({N Errores}>0,1,0)",
+      "uso": "KPI: tasa de errores"
+    },
+    {
+      "campo": "Minutos a envio",
+      "tipo": "Fórmula",
+      "opciones_o_formula": "DATETIME_DIFF({Enviado en},{Recibido en},'minutes')",
+      "uso": "KPI: velocidad"
+    },
+    {
+      "campo": "Costo IA total USD",
+      "tipo": "Rollup (suma)",
+      "opciones_o_formula": "Propuestas.Costo estimado USD + Costo IA-1 USD",
+      "uso": "KPI: costo por lead"
+    }
+  ],
+  "Propuestas": [
+    {
+      "campo": "Asunto (primario)",
+      "tipo": "Texto",
+      "opciones_o_formula": "",
+      "uso": "Asunto del correo"
+    },
+    {
+      "campo": "Lead",
+      "tipo": "Vínculo → Leads",
+      "opciones_o_formula": "",
+      "uso": "Relación N:1"
+    },
+    {
+      "campo": "Tipo",
+      "tipo": "Selección única",
+      "opciones_o_formula": "Propuesta inicial, Seguimiento",
+      "uso": ""
+    },
+    {
+      "campo": "Estado",
+      "tipo": "Selección única",
+      "opciones_o_formula": "Borrador IA, Aprobada por Humano, Rechazada por Humano, Enviada",
+      "uso": "Estado de la propuesta"
+    },
+    {
+      "campo": "Ruta",
+      "tipo": "Selección única",
+      "opciones_o_formula": "VIP, ESTANDAR",
+      "uso": "Modelo usado según ruta"
+    },
+    {
+      "campo": "Cuerpo",
+      "tipo": "Texto largo",
+      "opciones_o_formula": "",
+      "uso": "Borrador generado"
+    },
+    {
+      "campo": "Supuestos / Preguntas abiertas / Alertas guardrail",
+      "tipo": "Texto largo (×3)",
+      "opciones_o_formula": "",
+      "uso": "Transparencia para el aprobador"
+    },
+    {
+      "campo": "Servicio principal",
+      "tipo": "Vínculo → Catalogo_Servicios",
+      "opciones_o_formula": "",
+      "uso": "Servicio citado y validado"
+    },
+    {
+      "campo": "Modelo IA / Tokens entrada / Tokens salida / Costo estimado USD",
+      "tipo": "Texto / Números",
+      "opciones_o_formula": "",
+      "uso": "Trazabilidad de costo"
+    },
+    {
+      "campo": "Decision en",
+      "tipo": "Fecha y hora",
+      "opciones_o_formula": "",
+      "uso": "Momento de la decisión humana"
+    },
+    {
+      "campo": "Minutos a decision",
+      "tipo": "Fórmula",
+      "opciones_o_formula": "DATETIME_DIFF({Decision en},CREATED_TIME(),'minutes')",
+      "uso": "KPI: tiempo de aprobación"
+    },
+    {
+      "campo": "Lote",
+      "tipo": "Vínculo → Lotes_Batch",
+      "opciones_o_formula": "",
+      "uso": "Solo seguimientos del lote"
+    }
+  ],
+  "Interacciones": [
+    {
+      "campo": "Resumen (primario)",
+      "tipo": "Texto",
+      "opciones_o_formula": "",
+      "uso": ""
+    },
+    {
+      "campo": "Lead",
+      "tipo": "Vínculo → Leads",
+      "opciones_o_formula": "",
+      "uso": "Memoria de conversación"
+    },
+    {
+      "campo": "Direccion",
+      "tipo": "Selección única",
+      "opciones_o_formula": "Entrante, Saliente",
+      "uso": ""
+    },
+    {
+      "campo": "Canal",
+      "tipo": "Selección única",
+      "opciones_o_formula": "Email, Slack, WhatsApp, Webhook",
+      "uso": ""
+    },
+    {
+      "campo": "Contenido",
+      "tipo": "Texto largo",
+      "opciones_o_formula": "",
+      "uso": ""
+    },
+    {
+      "campo": "Thread ID",
+      "tipo": "Texto",
+      "opciones_o_formula": "",
+      "uso": "Hilo Gmail"
+    },
+    {
+      "campo": "Fecha",
+      "tipo": "Fecha y hora",
+      "opciones_o_formula": "",
+      "uso": ""
+    },
+    {
+      "campo": "Propuesta",
+      "tipo": "Vínculo → Propuestas",
+      "opciones_o_formula": "",
+      "uso": ""
+    }
+  ],
+  "Catalogo_Servicios": [
+    {
+      "campo": "Nombre (primario)",
+      "tipo": "Texto",
+      "opciones_o_formula": "",
+      "uso": "Base de conocimiento (RAG)"
+    },
+    {
+      "campo": "Categoria",
+      "tipo": "Texto",
+      "opciones_o_formula": "",
+      "uso": ""
+    },
+    {
+      "campo": "Descripcion",
+      "tipo": "Texto largo",
+      "opciones_o_formula": "",
+      "uso": ""
+    },
+    {
+      "campo": "Precio desde USD / Precio hasta USD",
+      "tipo": "Número (×2)",
+      "opciones_o_formula": "",
+      "uso": "Rango que la IA debe respetar"
+    },
+    {
+      "campo": "Duracion estimada",
+      "tipo": "Texto",
+      "opciones_o_formula": "",
+      "uso": ""
+    },
+    {
+      "campo": "Activo",
+      "tipo": "Checkbox",
+      "opciones_o_formula": "",
+      "uso": "Solo los activos entran al prompt"
+    },
+    {
+      "campo": "Propuestas",
+      "tipo": "Vínculo inverso",
+      "opciones_o_formula": "",
+      "uso": ""
+    }
+  ],
+  "Errores_Log": [
+    {
+      "campo": "Resumen (primario)",
+      "tipo": "Texto",
+      "opciones_o_formula": "",
+      "uso": "TIPO · etapa"
+    },
+    {
+      "campo": "Workflow / Etapa",
+      "tipo": "Texto (×2)",
+      "opciones_o_formula": "",
+      "uso": "Dónde falló"
+    },
+    {
+      "campo": "Tipo",
+      "tipo": "Selección única",
+      "opciones_o_formula": "DATOS_INCOMPLETOS, API_IA, JSON_INVALIDO, API_GMAIL, API_AIRTABLE, API_SLACK, HITL_TIMEOUT, OTRO",
+      "uso": ""
+    },
+    {
+      "campo": "Severidad",
+      "tipo": "Selección única",
+      "opciones_o_formula": "Baja, Media, Alta, Critica",
+      "uso": ""
+    },
+    {
+      "campo": "Mensaje",
+      "tipo": "Texto largo",
+      "opciones_o_formula": "",
+      "uso": "Detalle técnico (sin PII)"
+    },
+    {
+      "campo": "Payload resumen",
+      "tipo": "Texto",
+      "opciones_o_formula": "",
+      "uso": "Solo hash, nunca el mensaje"
+    },
+    {
+      "campo": "Execution ID / Execution URL",
+      "tipo": "Texto / URL",
+      "opciones_o_formula": "",
+      "uso": "Enlace a la ejecución en n8n"
+    },
+    {
+      "campo": "Lead",
+      "tipo": "Vínculo → Leads",
+      "opciones_o_formula": "",
+      "uso": ""
+    },
+    {
+      "campo": "Resuelto",
+      "tipo": "Checkbox",
+      "opciones_o_formula": "",
+      "uso": "Gestión manual"
+    },
+    {
+      "campo": "Fecha",
+      "tipo": "Fecha de creación",
+      "opciones_o_formula": "",
+      "uso": ""
+    }
+  ],
+  "Lotes_Batch": [
+    {
+      "campo": "Batch ID (primario)",
+      "tipo": "Texto",
+      "opciones_o_formula": "",
+      "uso": "ID msgbatch_… de Anthropic"
+    },
+    {
+      "campo": "Proveedor / Modelo",
+      "tipo": "Texto (×2)",
+      "opciones_o_formula": "",
+      "uso": ""
+    },
+    {
+      "campo": "Estado",
+      "tipo": "Selección única",
+      "opciones_o_formula": "en_proceso, completado, con_errores, fallido",
+      "uso": ""
+    },
+    {
+      "campo": "Requests totales / Exitosos / Con error",
+      "tipo": "Número (×3)",
+      "opciones_o_formula": "",
+      "uso": ""
+    },
+    {
+      "campo": "Costo real USD",
+      "tipo": "Número",
+      "opciones_o_formula": "",
+      "uso": "Ya con descuento 50 %"
+    },
+    {
+      "campo": "Creado en / Finalizado en",
+      "tipo": "Fecha y hora (×2)",
+      "opciones_o_formula": "",
+      "uso": ""
+    },
+    {
+      "campo": "Propuestas",
+      "tipo": "Vínculo inverso",
+      "opciones_o_formula": "",
+      "uso": ""
+    }
+  ]
+}

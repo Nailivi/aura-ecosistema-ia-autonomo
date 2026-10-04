@@ -1,0 +1,199 @@
+{
+  "name": "AURA · 04 Manejador Global de Errores",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "463f81ad-00bd-51c9-8dca-aaf1dcee9c85",
+      "name": "01 Error Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5466ca78-55f7-581f-83fc-8a3c3dfd86a4",
+              "name": "airtable_base_id",
+              "value": "appREEMPLAZAR",
+              "type": "string"
+            },
+            {
+              "id": "d5f60656-ea3c-5f1a-ba51-1642387f30c7",
+              "name": "tbl_errores",
+              "value": "tblREEMPLAZAR_ERRORES",
+              "type": "string"
+            },
+            {
+              "id": "771f5e43-a790-5831-bc1b-959d7160fc88",
+              "name": "slack_canal_alertas_id",
+              "value": "CREEMPLAZAR_ALR",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        270,
+        0
+      ],
+      "id": "bf2ae7fa-47e2-5bf5-91eb-152da77ead34",
+      "name": "02 Config Errores"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "\nconst e = $json.execution ?? {}, w = $json.workflow ?? {};\nreturn { json: { workflow: w.name ?? 'desconocido', nodo: e.lastNodeExecuted ?? 'desconocido', mensaje: String(e.error?.message ?? 'sin detalle').slice(0, 500),\n  execution_id: String(e.id ?? ''), execution_url: e.url ?? '', modo: e.mode ?? '' } };\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        540,
+        0
+      ],
+      "id": "bc554635-3c0c-5db8-a60a-b686d7f80b20",
+      "name": "03 Formatear Error"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "={{ $('02 Config Errores').first().json.airtable_base_id }}",
+          "mode": "id"
+        },
+        "table": {
+          "__rl": true,
+          "value": "={{ $('02 Config Errores').first().json.tbl_errores }}",
+          "mode": "id"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Resumen": "={{ 'NO_CONTROLADO · ' + $('03 Formatear Error').first().json.nodo }}",
+            "Workflow": "={{ $('03 Formatear Error').first().json.workflow }}",
+            "Etapa": "={{ $('03 Formatear Error').first().json.nodo }}",
+            "Tipo": "OTRO",
+            "Severidad": "Critica",
+            "Mensaje": "={{ $('03 Formatear Error').first().json.mensaje }}",
+            "Execution ID": "={{ $('03 Formatear Error').first().json.execution_id }}",
+            "Execution URL": "={{ $('03 Formatear Error').first().json.execution_url }}"
+          },
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        810,
+        0
+      ],
+      "id": "3d585496-f149-5be0-b82e-da8fc558835b",
+      "name": "04 Registrar Error Global en Airtable",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "REEMPLAZAR",
+          "name": "Airtable PAT (AURA)"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "={{ $('02 Config Errores').first().json.slack_canal_alertas_id }}",
+          "mode": "id"
+        },
+        "text": "={{ '🚨 AURA · error NO controlado en \"' + $('03 Formatear Error').first().json.workflow + '\" (nodo ' + $('03 Formatear Error').first().json.nodo + ')\\n' + $('03 Formatear Error').first().json.mensaje + '\\n' + $('03 Formatear Error').first().json.execution_url }}",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        810,
+        170
+      ],
+      "id": "45511ddf-9195-5338-baec-9b716c77c7f7",
+      "name": "05 Alerta Slack Error Global",
+      "credentials": {
+        "slackApi": {
+          "id": "REEMPLAZAR",
+          "name": "Slack (AURA)"
+        }
+      },
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "01 Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "02 Config Errores",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "02 Config Errores": {
+      "main": [
+        [
+          {
+            "node": "03 Formatear Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "03 Formatear Error": {
+      "main": [
+        [
+          {
+            "node": "04 Registrar Error Global en Airtable",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "05 Alerta Slack Error Global",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": true,
+    "saveExecutionProgress": true
+  },
+  "versionId": "4a06118f-8748-5a03-9edf-d7dab37fe45a",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

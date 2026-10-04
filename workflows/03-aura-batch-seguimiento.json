@@ -1,0 +1,1220 @@
+{
+  "name": "AURA · 03 Lote nocturno de seguimientos (Anthropic Batches -50%)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 2 * * *"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "cceac962-a3da-5e50-ac7e-9790bbe29333",
+      "name": "S1 Trigger Programado Nocturno"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "76d5d480-cb8a-5719-94c9-8924aba81658",
+              "name": "empresa_nombre",
+              "value": "Aurora Digital Studio",
+              "type": "string"
+            },
+            {
+              "id": "83db5712-8558-5b1b-9024-86ddcfeb1ecb",
+              "name": "empresa_firma",
+              "value": "Equipo Comercial · Aurora Digital Studio",
+              "type": "string"
+            },
+            {
+              "id": "e9432f26-356f-5903-83af-f9764a71e032",
+              "name": "tono_marca",
+              "value": "profesional, cercano y claro",
+              "type": "string"
+            },
+            {
+              "id": "19e2ab9b-eece-54fe-be3e-fb78cd7b83e4",
+              "name": "airtable_base_id",
+              "value": "appREEMPLAZAR",
+              "type": "string"
+            },
+            {
+              "id": "2a5a6c53-a7eb-5c6e-94f7-9bad8e0c71bc",
+              "name": "tbl_leads",
+              "value": "tblREEMPLAZAR_LEADS",
+              "type": "string"
+            },
+            {
+              "id": "779bc868-4f48-5abc-9bdf-cbe96d24c29f",
+              "name": "tbl_propuestas",
+              "value": "tblREEMPLAZAR_PROPUESTAS",
+              "type": "string"
+            },
+            {
+              "id": "4314e795-c8d5-5c87-b2e0-d687a1f3a8e5",
+              "name": "tbl_lotes",
+              "value": "tblREEMPLAZAR_LOTES",
+              "type": "string"
+            },
+            {
+              "id": "96afa01f-d895-5801-a91c-319cf34ae9f0",
+              "name": "slack_canal_operaciones_id",
+              "value": "CREEMPLAZAR_OPS",
+              "type": "string"
+            },
+            {
+              "id": "01e3ca79-6c94-5e5d-a06c-1c9f23e2b710",
+              "name": "slack_canal_alertas_id",
+              "value": "CREEMPLAZAR_ALR",
+              "type": "string"
+            },
+            {
+              "id": "d15beaf9-17e5-5ceb-9af0-d39b42081b9b",
+              "name": "modelo_claude_batch",
+              "value": "claude-sonnet-5-5",
+              "type": "string"
+            },
+            {
+              "id": "a1cf0111-3766-5a49-a17a-7a1c3c1f6607",
+              "name": "max_tokens_seguimiento",
+              "value": 500,
+              "type": "number"
+            },
+            {
+              "id": "722d396f-d72a-5635-98c4-95d97987d02c",
+              "name": "precio_claude_premium_in",
+              "value": 2,
+              "type": "number"
+            },
+            {
+              "id": "7d300e14-3dc4-58a0-85f9-21f789c2a849",
+              "name": "precio_claude_premium_out",
+              "value": 10,
+              "type": "number"
+            },
+            {
+              "id": "8c27c182-941a-51c1-85f7-08fd4bd3f350",
+              "name": "descuento_batch",
+              "value": 0.5,
+              "type": "number"
+            },
+            {
+              "id": "446c3ced-b1e2-554c-a80a-3361e4555357",
+              "name": "dias_sin_respuesta",
+              "value": 3,
+              "type": "number"
+            },
+            {
+              "id": "c48443d5-f8d1-59b1-a379-ba0315263466",
+              "name": "batch_max_leads",
+              "value": 50,
+              "type": "number"
+            },
+            {
+              "id": "10754940-8ed2-5a2c-be90-448d77768029",
+              "name": "estado_enviado",
+              "value": "Enviado",
+              "type": "string"
+            },
+            {
+              "id": "1b6fbd9f-ab0a-5df8-936d-4d4a45e1f8a9",
+              "name": "tipo_propuesta_seguimiento",
+              "value": "Seguimiento",
+              "type": "string"
+            },
+            {
+              "id": "61579430-7e6b-5401-a04a-2efdb958309a",
+              "name": "prop_borrador",
+              "value": "Borrador IA",
+              "type": "string"
+            },
+            {
+              "id": "b617f482-32cc-598d-90aa-666086061b4f",
+              "name": "lote_en_proceso",
+              "value": "en_proceso",
+              "type": "string"
+            },
+            {
+              "id": "e60373ce-d6e6-5a39-af4e-0cb9956eff51",
+              "name": "lote_completado",
+              "value": "completado",
+              "type": "string"
+            },
+            {
+              "id": "a8729490-241e-5142-968c-cf53551c439f",
+              "name": "lote_con_errores",
+              "value": "con_errores",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        270,
+        0
+      ],
+      "id": "cdc99923-141d-5395-afb5-e71bd8fd0315",
+      "name": "S2 Config Lote"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "={{ $('S2 Config Lote').first().json.airtable_base_id }}",
+          "mode": "id"
+        },
+        "table": {
+          "__rl": true,
+          "value": "={{ $('S2 Config Lote').first().json.tbl_leads }}",
+          "mode": "id"
+        },
+        "filterByFormula": "={{ \"AND({Estado}='\" + $('S2 Config Lote').first().json.estado_enviado + \"', NOT({Seguimiento generado}), DATETIME_DIFF(NOW(), {Enviado en}, 'days') >= \" + $('S2 Config Lote').first().json.dias_sin_respuesta + \")\" }}",
+        "returnAll": false,
+        "limit": "={{ $('S2 Config Lote').first().json.batch_max_leads }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        540,
+        0
+      ],
+      "id": "4758b8be-3d1d-50c9-a697-a54404ddf78d",
+      "name": "S3 Buscar Leads Sin Respuesta",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "REEMPLAZAR",
+          "name": "Airtable PAT (AURA)"
+        }
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "db4d4684-e11b-5667-91a3-310b4f8c6453",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        810,
+        0
+      ],
+      "id": "947afa55-fe9d-5ee1-9aab-368d96795f5a",
+      "name": "S4 Hay Leads?"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "\nconst cfg = $('S2 Config Lote').first().json;\nconst rows = $input.all().map(i => ({ id: i.json.id, f: i.json.fields ?? i.json }));\nconst system = `Eres ejecutivo comercial de ${cfg.empresa_nombre}. Escribe un correo de seguimiento breve (max 120 palabras), tono ${cfg.tono_marca}, sin inventar precios, plazos ni servicios. Termina con UNA pregunta que facilite responder. Firma: ${cfg.empresa_firma}. Responde SOLO JSON: {\"asunto\":string,\"cuerpo\":string}`;\nconst requests = rows.map(r => ({ custom_id: r.id, params: { model: cfg.modelo_claude_batch, max_tokens: Number(cfg.max_tokens_seguimiento), system,\n  messages: [{ role: 'user', content: `Lead: ${r.f.Nombre || 'cliente'} (${r.f.Empresa || 'sin empresa'})\\nNecesidad: ${r.f['Resumen IA'] || 'no registrada'}\\nServicio sugerido: ${r.f['Servicio sugerido'] || 'n/d'}\\nEnviado el: ${r.f['Enviado en'] || 'n/d'}` }] } }));\nreturn [{ json: { requests, n: requests.length, lead_ids: rows.map(r => r.id) } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1080,
+        0
+      ],
+      "id": "74579216-4c0f-51df-a73f-0419c88492ee",
+      "name": "S5 Construir Requests Batch"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages/batches",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "anthropicApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ requests: $json.requests }) }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1350,
+        0
+      ],
+      "id": "3aef4d27-35f0-54e0-ad52-86ddc26789f4",
+      "name": "S6 Crear Batch Anthropic",
+      "credentials": {
+        "anthropicApi": {
+          "id": "REEMPLAZAR",
+          "name": "Anthropic (AURA)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "={{ $('S2 Config Lote').first().json.slack_canal_alertas_id }}",
+          "mode": "id"
+        },
+        "text": "={{ '🚨 AURA Lote: fallo al crear el batch nocturno (' + $('S5 Construir Requests Batch').first().json.n + ' leads). Se reintenta mañana.' }}",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        1620,
+        0
+      ],
+      "id": "ebf1da02-3197-5515-8f22-0dbb5eef7e16",
+      "name": "S6e Alerta Slack Fallo Lote",
+      "credentials": {
+        "slackApi": {
+          "id": "REEMPLAZAR",
+          "name": "Slack (AURA)"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "={{ $('S2 Config Lote').first().json.airtable_base_id }}",
+          "mode": "id"
+        },
+        "table": {
+          "__rl": true,
+          "value": "={{ $('S2 Config Lote').first().json.tbl_lotes }}",
+          "mode": "id"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Batch ID": "={{ $json.id }}",
+            "Proveedor": "Anthropic",
+            "Modelo": "={{ $('S2 Config Lote').first().json.modelo_claude_batch }}",
+            "Estado": "={{ $('S2 Config Lote').first().json.lote_en_proceso }}",
+            "Requests totales": "={{ $('S5 Construir Requests Batch').first().json.n }}",
+            "Creado en": "={{ new Date().toISOString() }}"
+          },
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1620,
+        170
+      ],
+      "id": "19ae0963-a741-5a53-b989-ea7913a30857",
+      "name": "S7 Registrar Lote en Airtable",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "REEMPLAZAR",
+          "name": "Airtable PAT (AURA)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return $('S5 Construir Requests Batch').first().json.lead_ids.map(id => ({ json: { id } }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1890,
+        0
+      ],
+      "id": "f1a26bd9-1e40-522e-83f2-7fd8b9448783",
+      "name": "S8 Preparar Marcado de Leads"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "={{ $('S2 Config Lote').first().json.airtable_base_id }}",
+          "mode": "id"
+        },
+        "table": {
+          "__rl": true,
+          "value": "={{ $('S2 Config Lote').first().json.tbl_leads }}",
+          "mode": "id"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.id }}",
+            "Seguimiento generado": true
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": []
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        2160,
+        0
+      ],
+      "id": "b83d046a-0874-50d3-97e6-4ccdc6fdbf60",
+      "name": "S9 Marcar Leads Con Seguimiento Generado",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "REEMPLAZAR",
+          "name": "Airtable PAT (AURA)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 3
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        170
+      ],
+      "id": "df2d73e0-9aeb-59ca-bc55-a0f3074bba6e",
+      "name": "C1 Trigger Programado Recoleccion (cada 3 h)"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "76d5d480-cb8a-5719-94c9-8924aba81658",
+              "name": "empresa_nombre",
+              "value": "Aurora Digital Studio",
+              "type": "string"
+            },
+            {
+              "id": "83db5712-8558-5b1b-9024-86ddcfeb1ecb",
+              "name": "empresa_firma",
+              "value": "Equipo Comercial · Aurora Digital Studio",
+              "type": "string"
+            },
+            {
+              "id": "e9432f26-356f-5903-83af-f9764a71e032",
+              "name": "tono_marca",
+              "value": "profesional, cercano y claro",
+              "type": "string"
+            },
+            {
+              "id": "19e2ab9b-eece-54fe-be3e-fb78cd7b83e4",
+              "name": "airtable_base_id",
+              "value": "appREEMPLAZAR",
+              "type": "string"
+            },
+            {
+              "id": "2a5a6c53-a7eb-5c6e-94f7-9bad8e0c71bc",
+              "name": "tbl_leads",
+              "value": "tblREEMPLAZAR_LEADS",
+              "type": "string"
+            },
+            {
+              "id": "779bc868-4f48-5abc-9bdf-cbe96d24c29f",
+              "name": "tbl_propuestas",
+              "value": "tblREEMPLAZAR_PROPUESTAS",
+              "type": "string"
+            },
+            {
+              "id": "4314e795-c8d5-5c87-b2e0-d687a1f3a8e5",
+              "name": "tbl_lotes",
+              "value": "tblREEMPLAZAR_LOTES",
+              "type": "string"
+            },
+            {
+              "id": "96afa01f-d895-5801-a91c-319cf34ae9f0",
+              "name": "slack_canal_operaciones_id",
+              "value": "CREEMPLAZAR_OPS",
+              "type": "string"
+            },
+            {
+              "id": "01e3ca79-6c94-5e5d-a06c-1c9f23e2b710",
+              "name": "slack_canal_alertas_id",
+              "value": "CREEMPLAZAR_ALR",
+              "type": "string"
+            },
+            {
+              "id": "d15beaf9-17e5-5ceb-9af0-d39b42081b9b",
+              "name": "modelo_claude_batch",
+              "value": "claude-sonnet-5-5",
+              "type": "string"
+            },
+            {
+              "id": "a1cf0111-3766-5a49-a17a-7a1c3c1f6607",
+              "name": "max_tokens_seguimiento",
+              "value": 500,
+              "type": "number"
+            },
+            {
+              "id": "722d396f-d72a-5635-98c4-95d97987d02c",
+              "name": "precio_claude_premium_in",
+              "value": 2,
+              "type": "number"
+            },
+            {
+              "id": "7d300e14-3dc4-58a0-85f9-21f789c2a849",
+              "name": "precio_claude_premium_out",
+              "value": 10,
+              "type": "number"
+            },
+            {
+              "id": "8c27c182-941a-51c1-85f7-08fd4bd3f350",
+              "name": "descuento_batch",
+              "value": 0.5,
+              "type": "number"
+            },
+            {
+              "id": "446c3ced-b1e2-554c-a80a-3361e4555357",
+              "name": "dias_sin_respuesta",
+              "value": 3,
+              "type": "number"
+            },
+            {
+              "id": "c48443d5-f8d1-59b1-a379-ba0315263466",
+              "name": "batch_max_leads",
+              "value": 50,
+              "type": "number"
+            },
+            {
+              "id": "10754940-8ed2-5a2c-be90-448d77768029",
+              "name": "estado_enviado",
+              "value": "Enviado",
+              "type": "string"
+            },
+            {
+              "id": "1b6fbd9f-ab0a-5df8-936d-4d4a45e1f8a9",
+              "name": "tipo_propuesta_seguimiento",
+              "value": "Seguimiento",
+              "type": "string"
+            },
+            {
+              "id": "61579430-7e6b-5401-a04a-2efdb958309a",
+              "name": "prop_borrador",
+              "value": "Borrador IA",
+              "type": "string"
+            },
+            {
+              "id": "b617f482-32cc-598d-90aa-666086061b4f",
+              "name": "lote_en_proceso",
+              "value": "en_proceso",
+              "type": "string"
+            },
+            {
+              "id": "e60373ce-d6e6-5a39-af4e-0cb9956eff51",
+              "name": "lote_completado",
+              "value": "completado",
+              "type": "string"
+            },
+            {
+              "id": "a8729490-241e-5142-968c-cf53551c439f",
+              "name": "lote_con_errores",
+              "value": "con_errores",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        270,
+        170
+      ],
+      "id": "8ec57c30-70f5-506d-8250-fbc80f397d9c",
+      "name": "C2 Config Recoleccion"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "={{ $('C2 Config Recoleccion').first().json.airtable_base_id }}",
+          "mode": "id"
+        },
+        "table": {
+          "__rl": true,
+          "value": "={{ $('C2 Config Recoleccion').first().json.tbl_lotes }}",
+          "mode": "id"
+        },
+        "filterByFormula": "={{ \"{Estado}='\" + $('C2 Config Recoleccion').first().json.lote_en_proceso + \"'\" }}",
+        "returnAll": false,
+        "limit": 1,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        540,
+        170
+      ],
+      "id": "57d748b0-255d-5b32-a431-16e20fddd201",
+      "name": "C3 Buscar Lote En Proceso",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "REEMPLAZAR",
+          "name": "Airtable PAT (AURA)"
+        }
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1031d82e-7922-59f5-974c-c0ef1f573fcd",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        810,
+        170
+      ],
+      "id": "f6ebf6d9-1eb2-5841-abc2-e89f753b96fc",
+      "name": "C4 Hay Lote Pendiente?"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ 'https://api.anthropic.com/v1/messages/batches/' + ($json.fields ?? $json)['Batch ID'] }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "anthropicApi",
+        "options": {},
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1080,
+        170
+      ],
+      "id": "de2546ca-1348-58ac-8a40-c6c63b8b982f",
+      "name": "C5 Consultar Estado del Batch",
+      "credentials": {
+        "anthropicApi": {
+          "id": "REEMPLAZAR",
+          "name": "Anthropic (AURA)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d2d09007-5559-5876-9758-6fd03bc693f6",
+              "leftValue": "={{ $json.processing_status }}",
+              "rightValue": "ended",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1350,
+        170
+      ],
+      "id": "d0f928db-7f32-5603-a24e-cdd39dbb1f17",
+      "name": "C6 Batch Terminado?"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $json.results_url }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "anthropicApi",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          }
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1620,
+        340
+      ],
+      "id": "b1bca336-c379-5144-a354-c477438fd7e9",
+      "name": "C7 Descargar Resultados JSONL",
+      "credentials": {
+        "anthropicApi": {
+          "id": "REEMPLAZAR",
+          "name": "Anthropic (AURA)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "\nconst cfg = $('C2 Config Recoleccion').first().json;\nconst lote = $('C3 Buscar Lote En Proceso').first().json;\nconst txt = $input.first().json.data ?? $input.first().json.body ?? '';\nconst out = [];\nfor (const line of String(txt).split('\\n').filter(l => l.trim())) {\n  let r; try { r = JSON.parse(line); } catch (e) { continue; }\n  const ok = r.result?.type === 'succeeded';\n  let asunto = '', cuerpo = '';\n  if (ok) { const t = (r.result.message.content || []).filter(c => c.type === 'text').map(c => c.text).join('');\n    const a = t.indexOf('{'), b = t.lastIndexOf('}'); try { const j = JSON.parse(t.slice(a, b + 1)); asunto = j.asunto; cuerpo = j.cuerpo; } catch (e) {} }\n  const tin = r.result?.message?.usage?.input_tokens ?? 0, tout = r.result?.message?.usage?.output_tokens ?? 0;\n  const costo = (tin / 1e6 * Number(cfg.precio_claude_premium_in) + tout / 1e6 * Number(cfg.precio_claude_premium_out)) * (1 - Number(cfg.descuento_batch));\n  out.push({ json: { lead_id: r.custom_id, ok: ok && !!cuerpo, tipo_resultado: r.result?.type, asunto, cuerpo, tokens_in: tin, tokens_out: tout,\n    costo_usd: Math.round(costo * 1e6) / 1e6, modelo: r.result?.message?.model ?? '', lote_record_id: lote.id } });\n}\nreturn out.length ? out : [{ json: { lead_id: '', ok: false, tipo_resultado: 'sin_resultados', lote_record_id: lote.id, costo_usd: 0 } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1890,
+        170
+      ],
+      "id": "012eb660-f4d2-503e-8bb2-3ccb0ebc0813",
+      "name": "C8 Parsear Resultados"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "118f11ac-7aa5-5839-8cd6-e7196c3e346a",
+              "leftValue": "={{ $json.ok }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2160,
+        170
+      ],
+      "id": "22eedd50-ea03-5fde-9309-275c774a151f",
+      "name": "C9a Resultado OK?"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "={{ $('C2 Config Recoleccion').first().json.airtable_base_id }}",
+          "mode": "id"
+        },
+        "table": {
+          "__rl": true,
+          "value": "={{ $('C2 Config Recoleccion').first().json.tbl_propuestas }}",
+          "mode": "id"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Asunto": "={{ $json.asunto }}",
+            "Lead": "={{ [$json.lead_id] }}",
+            "Tipo": "={{ $('C2 Config Recoleccion').first().json.tipo_propuesta_seguimiento }}",
+            "Estado": "={{ $('C2 Config Recoleccion').first().json.prop_borrador }}",
+            "Cuerpo": "={{ $json.cuerpo }}",
+            "Modelo IA": "={{ $json.modelo }}",
+            "Tokens entrada": "={{ $json.tokens_in }}",
+            "Tokens salida": "={{ $json.tokens_out }}",
+            "Costo estimado USD": "={{ $json.costo_usd }}",
+            "Lote": "={{ [$json.lote_record_id] }}"
+          },
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        650
+      ],
+      "id": "84c0950a-1ab3-5b85-8751-4487e5795c51",
+      "name": "C9 Crear Borrador de Seguimiento",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "REEMPLAZAR",
+          "name": "Airtable PAT (AURA)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "\nconst cfg = $('C2 Config Recoleccion').first().json;\nconst items = $('C8 Parsear Resultados').all().map(i => i.json);\nconst ok = items.filter(i => i.ok).length, err = items.length - ok;\nreturn [{ json: { lote_record_id: items[0].lote_record_id, ok, err, estado: err === 0 ? cfg.lote_completado : cfg.lote_con_errores,\n  costo_total: Math.round(items.reduce((s, i) => s + Number(i.costo_usd || 0), 0) * 1e6) / 1e6 } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2160,
+        340
+      ],
+      "id": "d701e8e8-8f04-51b7-8b00-6a39d8f3afd4",
+      "name": "C10 Resumen del Lote"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "={{ $('C2 Config Recoleccion').first().json.airtable_base_id }}",
+          "mode": "id"
+        },
+        "table": {
+          "__rl": true,
+          "value": "={{ $('C2 Config Recoleccion').first().json.tbl_lotes }}",
+          "mode": "id"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.lote_record_id }}",
+            "Estado": "={{ $json.estado }}",
+            "Exitosos": "={{ $json.ok }}",
+            "Con error": "={{ $json.err }}",
+            "Finalizado en": "={{ new Date().toISOString() }}",
+            "Costo real USD": "={{ $json.costo_total }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": []
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        820
+      ],
+      "id": "3570fbab-c6da-5f72-88e7-1c301baf9b49",
+      "name": "C11 Cerrar Lote en Airtable",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "REEMPLAZAR",
+          "name": "Airtable PAT (AURA)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "={{ $('C2 Config Recoleccion').first().json.slack_canal_operaciones_id }}",
+          "mode": "id"
+        },
+        "text": "={{ '📦 Lote de seguimientos terminado: ' + $('C10 Resumen del Lote').first().json.ok + ' borradores listos para revision humana, ' + $('C10 Resumen del Lote').first().json.err + ' con error. Costo real USD ' + $('C10 Resumen del Lote').first().json.costo_total + ' (precio de lote -50%).' }}",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        270,
+        650
+      ],
+      "id": "a4cea0c6-43c2-5a23-a754-3135d2d8a8cd",
+      "name": "C12 Slack Resumen del Lote",
+      "credentials": {
+        "slackApi": {
+          "id": "REEMPLAZAR",
+          "name": "Slack (AURA)"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "## Lote nocturno (proceso masivo, no urgente)\nS*: 02:00 → busca leads sin respuesta → arma N solicitudes → **Message Batches API (-50 %)**.\nC*: cada 3 h revisa el lote; al terminar guarda borradores en Airtable. **No se envía nada**: un humano revisa desde el dashboard.",
+        "height": 180,
+        "width": 560,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -300
+      ],
+      "id": "395f8009-0da8-52cf-b13e-5b7f8a195de2",
+      "name": "Nota"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "S1 Trigger Programado Nocturno": {
+      "main": [
+        [
+          {
+            "node": "S2 Config Lote",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "S2 Config Lote": {
+      "main": [
+        [
+          {
+            "node": "S3 Buscar Leads Sin Respuesta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "S3 Buscar Leads Sin Respuesta": {
+      "main": [
+        [
+          {
+            "node": "S4 Hay Leads?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "S4 Hay Leads?": {
+      "main": [
+        [
+          {
+            "node": "S5 Construir Requests Batch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "S5 Construir Requests Batch": {
+      "main": [
+        [
+          {
+            "node": "S6 Crear Batch Anthropic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "S6 Crear Batch Anthropic": {
+      "main": [
+        [
+          {
+            "node": "S7 Registrar Lote en Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "S6e Alerta Slack Fallo Lote",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "S7 Registrar Lote en Airtable": {
+      "main": [
+        [
+          {
+            "node": "S8 Preparar Marcado de Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "S8 Preparar Marcado de Leads": {
+      "main": [
+        [
+          {
+            "node": "S9 Marcar Leads Con Seguimiento Generado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "C1 Trigger Programado Recoleccion (cada 3 h)": {
+      "main": [
+        [
+          {
+            "node": "C2 Config Recoleccion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "C2 Config Recoleccion": {
+      "main": [
+        [
+          {
+            "node": "C3 Buscar Lote En Proceso",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "C3 Buscar Lote En Proceso": {
+      "main": [
+        [
+          {
+            "node": "C4 Hay Lote Pendiente?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "C4 Hay Lote Pendiente?": {
+      "main": [
+        [
+          {
+            "node": "C5 Consultar Estado del Batch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "C5 Consultar Estado del Batch": {
+      "main": [
+        [
+          {
+            "node": "C6 Batch Terminado?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "C6 Batch Terminado?": {
+      "main": [
+        [
+          {
+            "node": "C7 Descargar Resultados JSONL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "C7 Descargar Resultados JSONL": {
+      "main": [
+        [
+          {
+            "node": "C8 Parsear Resultados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "C8 Parsear Resultados": {
+      "main": [
+        [
+          {
+            "node": "C9a Resultado OK?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "C10 Resumen del Lote",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "C9a Resultado OK?": {
+      "main": [
+        [
+          {
+            "node": "C9 Crear Borrador de Seguimiento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "C10 Resumen del Lote": {
+      "main": [
+        [
+          {
+            "node": "C11 Cerrar Lote en Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "C11 Cerrar Lote en Airtable": {
+      "main": [
+        [
+          {
+            "node": "C12 Slack Resumen del Lote",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": true,
+    "saveExecutionProgress": true
+  },
+  "versionId": "8da3bd0e-af57-5847-8a68-c1cbf326de23",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}
